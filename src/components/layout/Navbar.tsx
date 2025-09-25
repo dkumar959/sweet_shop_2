@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, ShoppingBag, User, LogOut, Shield, Home, LayoutDashboard } from 'lucide-react';
+import { Menu, X, ShoppingBag, User, LogOut, Shield, Chrome as Home, LayoutDashboard } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useAppSelector, useAppDispatch } from '../../hooks/redux';
 import { logout } from '../../store/slices/authSlice';
