@@ -24,23 +24,23 @@ const AppContent: React.FC = () => {
           <Route path="/dashboard" element={<DashboardPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
-          <Route 
-            path="/admin" 
+          <Route
+            path="/admin"
             element={
               <ProtectedRoute requireAdmin>
                 <AdminPage />
               </ProtectedRoute>
-            } 
+            }
           />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
-        
+
         <Toaster
           position="top-right"
           richColors
-          closeButton
-          expand={false}
-          duration={4000}
+          // closeButton
+          // expand={false}
+          duration={2000}
         />
       </div>
     </Router>
