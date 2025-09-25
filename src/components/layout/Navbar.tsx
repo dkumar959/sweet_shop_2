@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, ShoppingBag, User, LogOut, Shield } from 'lucide-react';
+import { Menu, X, ShoppingBag, User, LogOut, Shield, Home, LayoutDashboard } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useAppSelector, useAppDispatch } from '../../hooks/redux';
 import { logout } from '../../store/slices/authSlice';
@@ -16,6 +16,7 @@ const Navbar: React.FC = () => {
   const handleLogout = () => {
     dispatch(logout());
     navigate('/');
+    setIsMobileMenuOpen(false);
     toast.success('Logged out successfully!');
   };
 
@@ -53,8 +54,18 @@ const Navbar: React.FC = () => {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-4">
-            <NavLink to="/">Home</NavLink>
-            <NavLink to="/dashboard">Dashboard</NavLink>
+            <NavLink to="/">
+              <div className="flex items-center space-x-1">
+                <Home className="h-4 w-4" />
+                <span>Home</span>
+              </div>
+            </NavLink>
+            <NavLink to="/dashboard">
+              <div className="flex items-center space-x-1">
+                <LayoutDashboard className="h-4 w-4" />
+                <span>Dashboard</span>
+              </div>
+            </NavLink>
             
             {user?.role === 'admin' && (
               <NavLink to="/admin">
@@ -120,15 +131,21 @@ const Navbar: React.FC = () => {
           >
             <div className="px-2 pt-2 pb-3 space-y-1">
               <NavLink to="/" onClick={() => setIsMobileMenuOpen(false)}>
-                Home
+                <div className="flex items-center space-x-2 px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-pink-600 hover:bg-pink-50">
+                  <Home className="h-5 w-5" />
+                  <span>Home</span>
+                </div>
               </NavLink>
               <NavLink to="/dashboard" onClick={() => setIsMobileMenuOpen(false)}>
-                Dashboard
+                <div className="flex items-center space-x-2 px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-pink-600 hover:bg-pink-50">
+                  <LayoutDashboard className="h-5 w-5" />
+                  <span>Dashboard</span>
+                </div>
               </NavLink>
               
               {user?.role === 'admin' && (
                 <NavLink to="/admin" onClick={() => setIsMobileMenuOpen(false)}>
-                  <div className="flex items-center space-x-1">
+                  <div className="flex items-center space-x-2 px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-pink-600 hover:bg-pink-50">
                     <Shield className="h-4 w-4" />
                     <span>Admin</span>
                   </div>
@@ -137,7 +154,7 @@ const Navbar: React.FC = () => {
 
               {user ? (
                 <div className="pt-4 border-t border-pink-200">
-                  <div className="flex items-center space-x-2 px-3 py-2">
+                  <div className="flex items-center space-x-2 px-3 py-2 mb-3">
                     <User className="h-4 w-4 text-pink-600" />
                     <span className="text-sm font-medium">{user.name}</span>
                     <span className="text-xs bg-pink-100 text-pink-600 px-2 py-1 rounded-full">
@@ -147,11 +164,10 @@ const Navbar: React.FC = () => {
                   <Button
                     onClick={() => {
                       handleLogout();
-                      setIsMobileMenuOpen(false);
                     }}
                     variant="outline"
                     size="sm"
-                    className="w-full mx-3 mb-2"
+                    className="w-full mx-3 mb-2 flex items-center justify-center"
                   >
                     <LogOut className="h-4 w-4 mr-2" />
                     Logout
@@ -163,18 +179,20 @@ const Navbar: React.FC = () => {
                     asChild
                     variant="outline"
                     size="sm"
-                    className="w-full mx-3"
-                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="w-full mx-3 flex items-center justify-center"
                   >
-                    <Link to="/login">Login</Link>
+                    <Link to="/login" onClick={() => setIsMobileMenuOpen(false)}>
+                      Login
+                    </Link>
                   </Button>
                   <Button
                     asChild
                     size="sm"
-                    className="w-full mx-3 mb-2"
-                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="w-full mx-3 mb-2 flex items-center justify-center"
                   >
-                    <Link to="/register">Register</Link>
+                    <Link to="/register" onClick={() => setIsMobileMenuOpen(false)}>
+                      Register
+                    </Link>
                   </Button>
                 </div>
               )}

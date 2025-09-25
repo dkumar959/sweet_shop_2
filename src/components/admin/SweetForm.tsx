@@ -55,6 +55,8 @@ const SweetForm: React.FC<SweetFormProps> = ({ isOpen, onClose, onSubmit, sweet,
 
     if (!formData.name.trim()) {
       newErrors.name = 'Name is required';
+    } else if (formData.name.trim().length < 2) {
+      newErrors.name = 'Name must be at least 2 characters';
     }
 
     if (!formData.category) {
@@ -63,16 +65,19 @@ const SweetForm: React.FC<SweetFormProps> = ({ isOpen, onClose, onSubmit, sweet,
 
     if (!formData.price.trim()) {
       newErrors.price = 'Price is required';
-    } else if (isNaN(Number(formData.price)) || Number(formData.price) <= 0) {
+    } else if (isNaN(Number(formData.price)) || Number(formData.price) <= 0 || Number(formData.price) > 10000) {
       newErrors.price = 'Price must be a positive number';
     }
 
     if (!formData.stock.trim()) {
       newErrors.stock = 'Stock is required';
-    } else if (isNaN(Number(formData.stock)) || Number(formData.stock) < 0) {
+    } else if (isNaN(Number(formData.stock)) || Number(formData.stock) < 0 || Number(formData.stock) > 10000) {
       newErrors.stock = 'Stock must be a non-negative number';
     }
 
+    if (formData.description.trim().length > 500) {
+      newErrors.description = 'Description must be less than 500 characters';
+    }
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };

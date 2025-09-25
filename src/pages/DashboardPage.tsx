@@ -65,7 +65,7 @@ const DashboardPage: React.FC = () => {
     return (
       <Layout>
         <div className="container mx-auto px-4 py-8">
-          <LoadingSpinner size="lg" className="min-h-[400px]" />
+          <LoadingSpinner size="lg" className="min-h-[400px]" text="Loading delicious sweets..." />
         </div>
       </Layout>
     );

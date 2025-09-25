@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { CreditCard as Edit, Trash2, Plus, Package } from 'lucide-react';
+import { Edit, Trash2, Plus, Package } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -15,10 +15,21 @@ interface AdminSweetCardProps {
 }
 
 const AdminSweetCard: React.FC<AdminSweetCardProps> = ({ sweet, onEdit, onDelete, onRestock }) => {
+  const [isDeleting, setIsDeleting] = useState(false);
+
   const getStockStatus = () => {
     if (sweet.stock === 0) return { color: 'destructive', text: 'Out of Stock' };
     if (sweet.stock <= 5) return { color: 'secondary', text: 'Low Stock' };
     return { color: 'default', text: 'In Stock' };
+  };
+
+  const handleDelete = async () => {
+    setIsDeleting(true);
+    try {
+      await onDelete(sweet.id);
+    } finally {
+      setIsDeleting(false);
+    }
   };
 
   const stockStatus = getStockStatus();
@@ -106,10 +117,18 @@ const AdminSweetCard: React.FC<AdminSweetCardProps> = ({ sweet, onEdit, onDelete
                 <AlertDialogFooter>
                   <AlertDialogCancel>Cancel</AlertDialogCancel>
                   <AlertDialogAction
-                    onClick={() => onDelete(sweet.id)}
+                    onClick={handleDelete}
+                    disabled={isDeleting}
                     className="bg-red-600 hover:bg-red-700"
                   >
-                    Delete
+                    {isDeleting ? (
+                      <>
+                        <div className="mr-2 h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
+                        Deleting...
+                      </>
+                    ) : (
+                      'Delete'
+                    )}
                   </AlertDialogAction>
                 </AlertDialogFooter>
               </AlertDialogContent>

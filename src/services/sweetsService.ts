@@ -56,51 +56,51 @@ const mockSweets: Sweet[] = [
 export const sweetsService = {
   getSweets: async () => {
     // Mock API call - replace with actual API
-    return new Promise((resolve) => {
+    return new Promise<any>((resolve) => {
       setTimeout(() => {
         resolve({ data: mockSweets });
-      }, 500);
+      }, 300);
     });
   },
 
   addSweet: async (sweetData: Omit<Sweet, 'id'>) => {
-    return new Promise((resolve) => {
+    return new Promise<any>((resolve) => {
       setTimeout(() => {
         const newSweet = {
           ...sweetData,
           id: Math.random().toString(),
         };
         resolve({ data: newSweet });
-      }, 500);
+      }, 300);
     });
   },
 
   updateSweet: async (id: string, sweetData: Partial<Sweet>) => {
-    return new Promise((resolve) => {
+    return new Promise<any>((resolve) => {
       setTimeout(() => {
         resolve({ data: { ...sweetData, id } });
-      }, 500);
+      }, 300);
     });
   },
 
   deleteSweet: async (id: string) => {
-    return new Promise((resolve) => {
+    return new Promise<any>((resolve) => {
       setTimeout(() => {
         resolve({ data: { success: true } });
-      }, 500);
+      }, 300);
     });
   },
 
   purchaseSweet: async (id: string, quantity: number = 1) => {
-    return new Promise((resolve, reject) => {
+    return new Promise<any>((resolve, reject) => {
       setTimeout(() => {
         const sweet = mockSweets.find(s => s.id === id);
         if (sweet && sweet.stock >= quantity) {
           resolve({ data: { success: true } });
         } else {
-          reject(new Error('Insufficient stock'));
+          reject(new Error('Sorry, this item is out of stock or insufficient quantity available.'));
         }
-      }, 500);
+      }, 300);
     });
   },
 };

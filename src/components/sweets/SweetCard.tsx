@@ -17,6 +17,7 @@ interface SweetCardProps {
 const SweetCard: React.FC<SweetCardProps> = ({ sweet }) => {
   const { user } = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
+  const [isPurchasing, setIsPurchasing] = useState(false);
 
   const handlePurchase = async () => {
     if (!user) {
@@ -29,6 +30,7 @@ const SweetCard: React.FC<SweetCardProps> = ({ sweet }) => {
       return;
     }
 
+    setIsPurchasing(true);
     try {
       await sweetsService.purchaseSweet(sweet.id);
       dispatch(purchaseSweet({ id: sweet.id, quantity: 1 }));
@@ -38,6 +40,8 @@ const SweetCard: React.FC<SweetCardProps> = ({ sweet }) => {
     } catch (error) {
       const message = error instanceof Error ? error.message : 'Purchase failed';
       toast.error(`Purchase failed: ${message}`);
+    } finally {
+      setIsPurchasing(false);
     }
   };
 
@@ -95,11 +99,16 @@ const SweetCard: React.FC<SweetCardProps> = ({ sweet }) => {
         <CardFooter className="pt-4">
           <Button
             onClick={handlePurchase}
-            disabled={sweet.stock === 0 || !user}
+            disabled={sweet.stock === 0 || !user || isPurchasing}
             className="w-full"
             variant={sweet.stock === 0 ? "secondary" : "default"}
           >
-            {sweet.stock === 0 ? (
+            {isPurchasing ? (
+              <>
+                <div className="mr-2 h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
+                Purchasing...
+              </>
+            ) : sweet.stock === 0 ? (
               <>
                 <AlertCircle className="mr-2 h-4 w-4" />
                 Out of Stock

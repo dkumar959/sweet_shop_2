@@ -29,25 +29,29 @@ const RegisterForm: React.FC = () => {
   const validateForm = () => {
     const newErrors: Record<string, string> = {};
 
-    if (!formData.username) {
+    if (!formData.username.trim()) {
       newErrors.username = 'Username is required';
-    } else if (formData.username.length < 3) {
+    } else if (formData.username.trim().length < 3) {
       newErrors.username = 'Username must be at least 3 characters';
+    } else if (!/^[a-zA-Z0-9_]+$/.test(formData.username.trim())) {
+      newErrors.username = 'Username can only contain letters, numbers, and underscores';
     }
 
-    if (!formData.email) {
+    if (!formData.email.trim()) {
       newErrors.email = 'Email is required';
-    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+    } else if (!/\S+@\S+\.\S+/.test(formData.email.trim())) {
       newErrors.email = 'Email is invalid';
     }
 
-    if (!formData.password) {
+    if (!formData.password.trim()) {
       newErrors.password = 'Password is required';
     } else if (formData.password.length < 6) {
       newErrors.password = 'Password must be at least 6 characters';
+    } else if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/.test(formData.password)) {
+      newErrors.password = 'Password must contain at least one uppercase letter, one lowercase letter, and one number';
     }
 
-    if (!formData.confirmPassword) {
+    if (!formData.confirmPassword.trim()) {
       newErrors.confirmPassword = 'Please confirm your password';
     } else if (formData.password !== formData.confirmPassword) {
       newErrors.confirmPassword = 'Passwords do not match';
@@ -65,7 +69,12 @@ const RegisterForm: React.FC = () => {
     dispatch(loginStart());
     
     try {
-      const response = await authService.register(formData);
+      const response = await authService.register({
+        username: formData.username.trim(),
+        email: formData.email.trim(),
+        password: formData.password.trim(),
+        confirmPassword: formData.confirmPassword.trim(),
+      });
       dispatch(loginSuccess(response.data));
       toast.success('Registration successful! Welcome to Sweet Shop! 🎉');
       navigate('/dashboard');

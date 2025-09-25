@@ -15,7 +15,7 @@ export interface RegisterData {
 export const authService = {
   login: async (credentials: LoginCredentials) => {
     // Mock API call - replace with actual API
-    return new Promise((resolve, reject) => {
+    return new Promise<any>((resolve, reject) => {
       setTimeout(() => {
         if (credentials.email === 'admin@sweetshop.com' && credentials.password === 'admin123') {
           resolve({
@@ -42,18 +42,24 @@ export const authService = {
             },
           });
         } else {
-          reject(new Error('Invalid credentials'));
+          reject(new Error('Invalid email or password. Please check your credentials and try again.'));
         }
-      }, 1000);
+      }, 800);
     });
   },
 
   register: async (userData: RegisterData) => {
     // Mock API call - replace with actual API
-    return new Promise((resolve, reject) => {
+    return new Promise<any>((resolve, reject) => {
       setTimeout(() => {
         if (userData.password !== userData.confirmPassword) {
           reject(new Error('Passwords do not match'));
+          return;
+        }
+        
+        // Check if email already exists (mock check)
+        if (userData.email === 'admin@sweetshop.com' || userData.email === 'customer@sweetshop.com') {
+          reject(new Error('Email already exists. Please use a different email address.'));
           return;
         }
         
@@ -68,7 +74,7 @@ export const authService = {
             token: 'mock-jwt-token-new-user',
           },
         });
-      }, 1000);
+      }, 800);
     });
   },
 };

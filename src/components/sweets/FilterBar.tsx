@@ -34,6 +34,7 @@ const FilterBar: React.FC = () => {
                 value={searchTerm}
                 onChange={(e) => dispatch(setSearchTerm(e.target.value))}
                 className="pl-10"
+                aria-label="Search sweets by name"
               />
             </div>
           </div>
@@ -43,7 +44,10 @@ const FilterBar: React.FC = () => {
             <Label className="text-sm font-medium text-gray-700 mb-2 block">
               Category
             </Label>
-            <Select value={selectedCategory} onValueChange={(value) => dispatch(setSelectedCategory(value))}>
+            <Select 
+              value={selectedCategory} 
+              onValueChange={(value) => dispatch(setSelectedCategory(value))}
+            >
               <SelectTrigger>
                 <SelectValue placeholder="All Categories" />
               </SelectTrigger>
@@ -70,6 +74,7 @@ const FilterBar: React.FC = () => {
               min={0}
               step={1}
               className="mt-2"
+              aria-label={`Price range from $${priceRange[0]} to $${priceRange[1]}`}
             />
           </div>
 
@@ -81,6 +86,7 @@ const FilterBar: React.FC = () => {
                 variant="outline"
                 size="sm"
                 className="flex items-center space-x-2"
+                aria-label="Clear all filters"
               >
                 <X className="h-4 w-4" />
                 <span>Clear</span>

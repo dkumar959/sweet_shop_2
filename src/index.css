@@ -82,6 +82,42 @@ html {
   outline-offset: 2px;
 }
 
+/* Improved button focus styles */
+button:focus-visible {
+  outline: 2px solid #ec4899;
+  outline-offset: 2px;
+}
+
+/* Better form input focus */
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 2px solid #ec4899;
+  outline-offset: 2px;
+  border-color: #ec4899;
+}
+
+/* Improved link focus */
+a:focus-visible {
+  outline: 2px solid #ec4899;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Loading animation improvements */
+@keyframes pulse-slow {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.animate-pulse-slow {
+  animation: pulse-slow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;

@@ -26,13 +26,13 @@ const LoginForm: React.FC = () => {
   const validateForm = () => {
     const newErrors: Record<string, string> = {};
 
-    if (!formData.email) {
+    if (!formData.email.trim()) {
       newErrors.email = 'Email is required';
     } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
       newErrors.email = 'Email is invalid';
     }
 
-    if (!formData.password) {
+    if (!formData.password.trim()) {
       newErrors.password = 'Password is required';
     } else if (formData.password.length < 6) {
       newErrors.password = 'Password must be at least 6 characters';
@@ -50,7 +50,10 @@ const LoginForm: React.FC = () => {
     dispatch(loginStart());
     
     try {
-      const response = await authService.login(formData);
+      const response = await authService.login({
+        email: formData.email.trim(),
+        password: formData.password.trim(),
+      });
       dispatch(loginSuccess(response.data));
       toast.success('Login successful! Welcome back! 🎉');
       navigate('/dashboard');
