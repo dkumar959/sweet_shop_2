@@ -44,15 +44,15 @@ const FilterBar: React.FC = () => {
             <Label className="text-sm font-medium text-gray-700 mb-2 block">
               Category
             </Label>
-            <Select 
-              value={selectedCategory} 
+            <Select
+              value={selectedCategory}
               onValueChange={(value) => dispatch(setSelectedCategory(value))}
             >
               <SelectTrigger>
                 <SelectValue placeholder="All Categories" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">All Categories</SelectItem>
+                <SelectItem value="all">All Categories</SelectItem>
                 {categories.map((category) => (
                   <SelectItem key={category} value={category}>
                     {category}

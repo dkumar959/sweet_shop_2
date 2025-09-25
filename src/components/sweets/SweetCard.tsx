@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { ShoppingCart, CircleAlert as AlertCircle, Package } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -87,7 +87,7 @@ const SweetCard: React.FC<SweetCardProps> = ({ sweet }) => {
                 </div>
               </div>
             </div>
-            
+
             {sweet.description && (
               <p className="text-sm text-gray-600 line-clamp-3">
                 {sweet.description}
